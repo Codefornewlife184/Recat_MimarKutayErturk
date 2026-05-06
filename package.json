@@ -1,0 +1,24 @@
+{
+  "name": "antra",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "vite --open",
+    "dev": "vite --open",
+    "build": "node scripts/build.cjs",
+    "build:vite": "vite build",
+    "preview": "vite preview",
+    "serve-static": "node server.js"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "swiper": "^10.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^3.1.0",
+    "sass": "^1.80.6",
+    "vite": "^4.5.14"
+  }
+}
