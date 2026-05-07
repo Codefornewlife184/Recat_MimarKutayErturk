@@ -1,0 +1,32 @@
+Options -Indexes
+
+<IfModule mod_authz_core.c>
+  <FilesMatch "^\.">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+  <FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+<IfModule mod_env.c>
+  SetEnv SMTP_HOST mail.mimarkutayerturk.com
+  SetEnv SMTP_PORT 465
+  SetEnv SMTP_SECURE true
+  SetEnv SMTP_USER info@mimarkutayerturk.com
+  SetEnv CONTACT_TO info@mimarkutayerturk.com
+  SetEnv CONTACT_FROM info@mimarkutayerturk.com
+</IfModule>

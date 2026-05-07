@@ -7,6 +7,20 @@ const projectRoot = path.resolve(__dirname, '..')
 const distDir = path.join(projectRoot, 'dist')
 const distIndexPath = path.join(distDir, 'index.html')
 
+function copyIntoDist(fromPath, toPath) {
+  if (!fs.existsSync(fromPath)) return
+  fs.mkdirSync(path.dirname(toPath), { recursive: true })
+
+  const stats = fs.statSync(fromPath)
+  if (stats.isDirectory()) {
+    fs.mkdirSync(toPath, { recursive: true })
+    fs.cpSync(fromPath, toPath, { recursive: true, force: true })
+    return
+  }
+
+  fs.copyFileSync(fromPath, toPath)
+}
+
 function runViteBuild() {
   const viteBin = path.join(projectRoot, 'node_modules', 'vite', 'bin', 'vite.js')
   const result = spawnSync(process.execPath, [viteBin, 'build'], {
@@ -101,3 +115,10 @@ function bundleLegacyScripts() {
 
 runViteBuild()
 bundleLegacyScripts()
+
+copyIntoDist(path.join(projectRoot, 'assets'), path.join(distDir, 'assets'))
+copyIntoDist(path.join(projectRoot, 'assets', 'img'), path.join(distDir, 'img'))
+copyIntoDist(path.join(projectRoot, 'assets', 'fonts'), path.join(distDir, 'fonts'))
+copyIntoDist(path.join(projectRoot, 'assets', 'fonts'), path.join(distDir, 'font'))
+copyIntoDist(path.join(projectRoot, 'mail.php'), path.join(distDir, 'mail.php'))
+copyIntoDist(path.join(projectRoot, '.htaccess'), path.join(distDir, '.htaccess'))
